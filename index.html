@@ -1,678 +1,1336 @@
 <!DOCTYPE html>
 <html lang="it">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Le Mie Regole di Vita</title>
-		<link
-			rel="stylesheet"
-			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-		/>
-		<style>
-			body {
-				font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-				line-height: 1.6;
-				margin: 20px;
-				padding-top: 60px;
-				background-color: #f9f9f9;
-				color: #333;
-				transition: background-color 0.3s, color 0.3s;
-			}
-			body.dark-theme {
-				background-color: #222;
-				color: #eee;
-			}
-			h1 {
-				color: #2c3e50;
-				text-align: center;
-				margin-bottom: 20px;
-				transition: color 0.3s;
-			}
-			.dark-theme h1 {
-				color: #eee;
-			}
-			#themeToggle {
-				position: fixed;
-				top: 20px;
-				left: 20px;
-				z-index: 1000;
-				padding: 10px 15px;
-				background-color: #3498db;
-				color: #fff;
-				border: none;
-				border-radius: 5px;
-				cursor: pointer;
-				font-size: 16px;
-				transition: background-color 0.3s ease, color 0.3s ease,
-					transform 0.2s ease;
-				display: flex;
-				align-items: center;
-				gap: 8px;
-			}
-			.dark-theme #themeToggle {
-				background-color: white;
-				color: #222;
-			}
-			.dark-theme #themeToggle:hover {
-				background-color: white;
-				color: #222;
-			}
-			#themeToggle:hover {
-				background-color: #2980b9;
-				transform: translateY(-1px);
-			}
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Le Mie Regole di Vita</title>
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+    <style>
+        body {
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            padding-top: 60px;
+            background-color: #f9f9f9;
+            color: #333;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        body.dark-theme {
+            background-color: #222;
+            color: #eee;
+        }
+        h1 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 20px;
+            transition: color 0.3s;
+        }
+        .dark-theme h1 {
+            color: #eee;
+        }
+        #themeToggle {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 1000;
+            padding: 10px 15px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease, color 0.3s ease,
+                transform 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .dark-theme #themeToggle {
+            background-color: white;
+            color: #222;
+        }
+        .dark-theme #themeToggle:hover {
+            background-color: white;
+            color: #222;
+        }
+        #themeToggle:hover {
+            background-color: #2980b9;
+            transform: translateY(-1px);
+        }
 
-			#closeAllButton {
-				position: fixed;
-				top: 20px;
-				right: 20px;
-				z-index: 1000;
-				padding: 10px 15px;
-				background-color: #e74c3c;
-				color: #fff;
-				border: none;
-				border-radius: 5px;
-				cursor: pointer;
-				font-size: 16px;
-				transition: background-color 0.3s ease;
-			}
-			#closeAllButton:hover {
-				background-color: #c0392b;
-			}
-			h2 {
-				color: #34495e;
-				cursor: pointer;
-				padding: 10px;
-				background-color: #ecf0f1;
-				border-radius: 5px;
-				transition: background-color 0.3s ease, transform 0.2s ease,
-					box-shadow 0.2s ease, color 0.3s;
-				display: flex;
-				justify-content: space-between;
-				align-items: center;
-				margin-bottom: 0;
-			}
-			.dark-theme h2 {
-				background-color: #444;
-				color: #fff;
-			}
-			h2:hover {
-				background-color: #bdc3c7;
-				transform: translateY(-2px);
-				box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-			}
-			.category {
-				margin-bottom: 20px;
-				padding-bottom: 0;
-				border-bottom: none;
-				box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-				border-radius: 5px;
-				overflow: hidden;
-				opacity: 0;
-				transform: translateY(20px);
-				animation: fadeIn 0.5s ease-out forwards;
-			}
-			.dark-theme .category {
-				box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
-			}
-			@keyframes fadeIn {
-				to {
-					opacity: 1;
-					transform: translateY(0);
-				}
-			}
-			.category:nth-child(2) {
-				animation-delay: 0.1s;
-			}
-			.category:nth-child(3) {
-				animation-delay: 0.2s;
-			}
-			.category:nth-child(4) {
-				animation-delay: 0.3s;
-			}
-			.category:nth-child(5) {
-				animation-delay: 0.4s;
-			}
-			.category:nth-child(6) {
-				animation-delay: 0.5s;
-			}
-			.category:nth-child(7) {
-				animation-delay: 0.6s;
-			}
+        #closeAllButton {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            padding: 10px 15px;
+            background-color: #e74c3c;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+        #closeAllButton:hover {
+            background-color: #c0392b;
+        }
+        h2 {
+            color: #34495e;
+            cursor: pointer;
+            padding: 10px;
+            background-color: #ecf0f1;
+            border-radius: 5px;
+            transition: background-color 0.3s ease, transform 0.2s ease,
+                box-shadow 0.2s ease, color 0.3s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0;
+        }
+        .dark-theme h2 {
+            background-color: #444;
+            color: #fff;
+        }
+        h2:hover {
+            background-color: #bdc3c7;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .category {
+            margin-bottom: 20px;
+            padding-bottom: 0;
+            border-bottom: none;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            overflow: hidden;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeIn 0.5s ease-out forwards;
+        }
+        .dark-theme .category {
+            box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+        }
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        .category:nth-child(2) {
+            animation-delay: 0.1s;
+        }
+        .category:nth-child(3) {
+            animation-delay: 0.2s;
+        }
+        .category:nth-child(4) {
+            animation-delay: 0.3s;
+        }
+        .category:nth-child(5) {
+            animation-delay: 0.4s;
+        }
+        .category:nth-child(6) {
+            animation-delay: 0.5s;
+        }
+        .category:nth-child(7) {
+            animation-delay: 0.6s;
+        }
 
-			.subcategory {
-				margin-left: 0;
-				display: none;
-				padding: 15px;
-				background-color: #fff;
-				border-top: 1px solid #eee;
-				border-radius: 0 0 5px 5px;
-				overflow: hidden;
-				max-height: 0;
-				opacity: 0;
-				transition: max-height 0.4s ease-in-out,
-					opacity 0.4s ease-in-out, background-color 0.3s, color 0.3s;
-			}
-			.dark-theme .subcategory {
-				background-color: #333;
-				border-top: 1px solid #555;
-			}
-			.subcategory.active {
-				display: block;
-				max-height: 800px;
-				opacity: 1;
-			}
-			.subcategory:nth-child(odd) {
-				background-color: #f9f9f9;
-			}
-			.dark-theme .subcategory:nth-child(odd) {
-				background-color: #3a3a3a;
-			}
-			ul {
-				list-style-type: none;
-				padding: 0;
-			}
-			li {
-				padding: 10px;
-				margin: 8px 0;
-				background-color: #f1f1f1;
-				border-radius: 3px;
-				transition: background-color 0.3s ease, color 0.3s;
-			}
-			.dark-theme li {
-				background-color: #444;
-				color: #eee;
-			}
-			li:hover {
-				background-color: #e8e8e8;
-			}
-			.dark-theme li:hover {
-				background-color: #555;
-			}
+        .subcategory {
+            margin-left: 0;
+            display: none;
+            padding: 15px;
+            background-color: #fff;
+            border-top: 1px solid #eee;
+            border-radius: 0 0 5px 5px;
+            overflow: hidden;
+            max-height: 0;
+            opacity: 0;
+            transition: max-height 0.4s ease-in-out,
+                opacity 0.4s ease-in-out, background-color 0.3s, color 0.3s;
+        }
+        .dark-theme .subcategory {
+            background-color: #333;
+            border-top: 1px solid #555;
+        }
+        .subcategory.active {
+            display: block;
+            max-height: 800px;
+            opacity: 1;
+        }
+        .subcategory:nth-child(odd) {
+            background-color: #f9f9f9;
+        }
+        .dark-theme .subcategory:nth-child(odd) {
+            background-color: #3a3a3a;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            padding: 10px;
+            margin: 8px 0;
+            background-color: #f1f1f1;
+            border-radius: 3px;
+            transition: background-color 0.3s ease, color 0.3s;
+            display: flex; /* Enable flex layout for rule items */
+            justify-content: space-between; /* Distribute space between rule text and actions */
+            align-items: center; /* Vertically align items in rule items */
+        }
+        .dark-theme li {
+            background-color: #444;
+            color: #eee;
+        }
+        li:hover {
+            background-color: #e8e8e8;
+        }
+        .dark-theme li:hover {
+            background-color: #555;
+        }
 
-			.search-container {
-				display: flex;
-				align-items: center;
-				border: 2px solid #3498db;
-				border-radius: 5px;
-				padding: 5px 10px;
-				margin-bottom: 20px;
-				transition: border-color 0.3s ease;
-				background-color: white;
-			}
-			.dark-theme .search-container {
-				background-color: #333;
-				border-color: white; /* White border in dark mode */
-			}
+        .search-container {
+            display: flex;
+            align-items: center;
+            border: 2px solid #3498db;
+            border-radius: 5px;
+            padding: 5px 10px;
+            margin-bottom: 20px;
+            transition: border-color 0.3s ease;
+            background-color: white;
+        }
+        .dark-theme .search-container {
+            background-color: #333;
+            border-color: white; /* White border in dark mode */
+        }
 
-			.dark-theme .search-container:focus-within {
-				border-color: white; /* White border on focus in dark mode */
-				box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* White shadow on focus in dark mode */
-			}
+        .dark-theme .search-container:focus-within {
+            border-color: white; /* White border on focus in dark mode */
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* White shadow on focus in dark mode */
+        }
 
-			.search-container:focus-within {
-				border-color: #2980b9;
-				box-shadow: 0 0 5px rgba(41, 128, 185, 0.5);
-			}
+        .search-container:focus-within {
+            border-color: #2980b9;
+            box-shadow: 0 0 5px rgba(41, 128, 185, 0.5);
+        }
 
-			.search-container i {
-				margin-right: 10px;
-				color: #3498db;
-				cursor: pointer;
-				transition: color 0.3s ease;
-			}
-			.dark-theme .search-container i {
-				color: white; /* White icon in dark mode */
-			}
+        .search-container i {
+            margin-right: 10px;
+            color: #3498db;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+        .dark-theme .search-container i {
+            color: white; /* White icon in dark mode */
+        }
 
-			#searchInput {
-				flex: 1;
-				border: none;
-				outline: none;
-				font-size: 16px;
-				background-color: transparent;
-				color: inherit;
-			}
+        #searchInput {
+            flex: 1;
+            border: none;
+            outline: none;
+            font-size: 16px;
+            background-color: transparent;
+            color: inherit;
+        }
 
-			.clear-icon {
-				opacity: 0;
-				transition: opacity 0.3s;
-			}
+        .clear-icon {
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
 
-			.search-container:focus-within .clear-icon,
-			.search-container:has(input:not(:placeholder-shown)) .clear-icon {
-				opacity: 1;
-			}
+        .search-container:focus-within .clear-icon,
+        .search-container:has(input:not(:placeholder-shown)) .clear-icon {
+            opacity: 1;
+        }
 
-			@media (max-width: 768px) {
-				#themeToggle {
-					left: 10px;
-				}
-				#closeAllButton {
-					right: 10px;
-				}
-			}
-		</style>
-	</head>
-	<body class="">
-		<h1>Le Mie Regole di Vita</h1>
+        @media (max-width: 768px) {
+            #themeToggle {
+                left: 10px;
+            }
+            #closeAllButton {
+                right: 10px;
+            }
+        }
 
-		<button id="themeToggle" onclick="toggleTheme()">
-			<i class="fas fa-moon"></i> Tema Scuro
-		</button>
-		<button id="closeAllButton" onclick="closeAllSubcategories()">
-			<i class="fas fa-times"></i> Chiudi tutto
-		</button>
+        /* Modals Styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
 
-		<div class="search-container">
-			<i class="fas fa-search"></i>
-			<input
-				type="text"
-				id="searchInput"
-				onkeyup="searchRules()"
-				placeholder="Cerca una regola..."
-			/>
-			<i class="fas fa-times clear-icon" onclick="clearSearch()"></i>
-		</div>
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+            border-radius: 5px;
+        }
 
-		<div id="categoriesContainer">
-			<div class="category" data-category-name="Obiettivi">
-				<h2 onclick="toggleSubcategory('obiettivi', this)">
-					<span><i class="fas fa-bullseye"></i> Obiettivi</span>
-					<i class="fas fa-chevron-down toggle-icon"></i>
-				</h2>
-				<div id="obiettivi" class="subcategory">
-					<h3>A Breve Termine</h3>
-					<ul>
-						<li>Essere promosso senza debiti</li>
-						<li>
-							Trovare e attuare in modo costante un metodo di
-							studio funzionale
-						</li>
-						<li>
-							Trovare e attuare in modo costante una routine
-							funzionale
-						</li>
-						<li>
-							Smettere di mangiarmi e strapparmi le unghie e le
-							pellicine
-						</li>
-						<li>Scegliere un cammino</li>
-						<li>
-							Volere sempre le stesse cose e rifiuatare sempre le
-							stesse cose
-						</li>
-						<li>
-							Imparare ad agire nel momento opportuno senza
-							rimandare
-						</li>
-					</ul>
-					<h3>A Lungo Termine</h3>
-					<ul>
-						<li>Essere nel momento presente quasi sempre</li>
-						<li>
-							Avere pieno controllo sulle reazioni alle emozioni
-						</li>
-						<li>Diventare medico</li>
-						<li>
-							Fare il bagno in acqua ghiacciata senza problemi
-						</li>
-						<li>Fare il bagno in acqua ghiacciata</li>
-						<li>Pace interiore e felicità</li>
-						<li>Ottima capacità critica</li>
-						<li>Capacità di ammettere gli errori</li>
-						<li>Non sentire il bisogno di mentire e non farlo</li>
-						<li>
-							Capacità di distinguere il giusto dallo sbagliato e
-							compiere il bene
-						</li>
-					</ul>
-				</div>
-			</div>
+        .close-button {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
 
-			<div class="category" data-category-name="Salute">
-				<h2 onclick="toggleSubcategory('salute', this)">
-					<span><i class="fas fa-heart"></i> Salute</span>
-					<i class="fas fa-chevron-down toggle-icon"></i>
-				</h2>
-				<div id="salute" class="subcategory">
-					<h3>Alimentazione</h3>
-					<ul>
-						<li>Segui la dieta.</li>
-						<li>Bevi almeno 2 litri di acqua al giorno.</li>
-						<li>
-							Permettiti un pasto a piacere a settimana, che non
-							sia troppo abbondante (es. piadina)
-						</li>
-						<li>
-							NIENTE bevande gassate a meno che non sia
-							un'occasione particolare
-						</li>
-						<li>
-							NIENTE cibo spazzatura a meno che non sia
-							un'occasione particolare
-						</li>
-						<li>NIENTE alcol, fumo e droghe</li>
-					</ul>
-					<h3>Esercizio Fisico e Benessere mentale</h3>
-					<ul>
-						<li>Allenati dalle 3 alle 6 volte a settimana</li>
-						<li>
-							Muoviti almeno un po' nei giorni in cui non ti
-							alleni
-						</li>
-						<li>Fai doccia fredda almeno 6 volte a settimana</li>
-						<li>
-							Fai 4 round della tecnica di respirazione WHM (Prima
-							di colazione) almeno 6 volte a settimana
-						</li>
-						<li>Medita almeno 5 minuti al giorno</li>
-					</ul>
-				</div>
-			</div>
+        .close-button:hover,
+        .close-button:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
 
-			<div class="category" data-category-name="Scuola">
-				<h2 onclick="toggleSubcategory('scuola', this)">
-					<span><i class="fas fa-graduation-cap"></i> Scuola</span>
-					<i class="fas fa-chevron-down toggle-icon"></i>
-				</h2>
-				<div id="scuola" class="subcategory">
-					<h3>Produttività</h3>
-					<ul>
-						<li>
-							Usa la tecnica del Pomodoro per gestire il tempo.
-						</li>
-						<li>Pianifica la domenica la settimana successiva</li>
-						<li>
-							Controlla ogni sera il piano e vedi se ci sono
-							modifiche da apportare per i giorni seguenti
-						</li>
-					</ul>
-					<h3>Relazioni</h3>
-					<ul>
-						<li>
-							Sii sempre rispettoso con i compagni. (evitando
-							anche insulti e offese)
-						</li>
-						<li>
-							Comunica in modo chiaro e diretto, senza parlare
-							troppo veloce e scandendo bene le parole
-						</li>
-					</ul>
-				</div>
-			</div>
+        .modal-header {
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 15px;
+        }
 
-			<div class="category" data-category-name="Lavoro">
-				<h2 onclick="toggleSubcategory('lavoro', this)">
-					<span><i class="fas fa-briefcase"></i> Lavoro</span>
-					<i class="fas fa-chevron-down toggle-icon"></i>
-				</h2>
-				<div id="lavoro" class="subcategory">
-					<h3>Produttività</h3>
-					<ul>
-						<li>
-							Usa la tecnica del Pomodoro per gestire il tempo.
-						</li>
-						<li>Fai una lista delle priorità ogni mattina.</li>
-					</ul>
-					<h3>Relazioni</h3>
-					<ul>
-						<li>Sii sempre rispettoso con i colleghi.</li>
-						<li>Comunica in modo chiaro e diretto.</li>
-					</ul>
-				</div>
-			</div>
+        .modal-body {
+            margin-bottom: 15px;
+        }
 
-			<div class="category" data-category-name="Relazioni">
-				<h2 onclick="toggleSubcategory('relazioni', this)">
-					<span><i class="fas fa-users"></i> Relazioni</span>
-					<i class="fas fa-chevron-down toggle-icon"></i>
-				</h2>
-				<div id="relazioni" class="subcategory">
-					<h3>Amicizie</h3>
-					<ul>
-						<li>Sii sempre sincero con gli amici.</li>
-						<li>Passa del tempo di qualità con loro.</li>
-						<li>Aiutali se hanno bisogno</li>
-						<li>
-							Rispetta anche chi ti ha mancato di rispetto e chi
-							ti ha tradito, se ha bisogno di aiuto aiutalo
-							mantenendo le distanze e chiarendo il perchè lo fai
-						</li>
-					</ul>
-				</div>
-			</div>
+        .modal-footer {
+            padding-top: 10px;
+            border-top: 1px solid #eee;
+            text-align: right;
+        }
 
-			<div class="category" data-category-name="Mindset">
-				<h2 onclick="toggleSubcategory('mindset', this)">
-					<span><i class="fas fa-brain"></i> Mindset</span>
-					<i class="fas fa-chevron-down toggle-icon"></i>
-				</h2>
-				<div id="mindset" class="subcategory">
-					<h3>Crescita Personale</h3>
-					<ul>
-						<li>Sii sempre aperto all'apprendimento.</li>
-						<li>Affronta le sfide con positività.</li>
-					</ul>
-				</div>
-			</div>
+        .modal-footer button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #3498db;
+            color: #fff;
+            transition: background-color 0.3s ease;
+        }
 
-			<div class="category" data-category-name="Passioni">
-				<h2 onclick="toggleSubcategory('passioni', this)">
-					<span><i class="fas fa-star"></i> Passioni</span>
-					<i class="fas fa-chevron-down toggle-icon"></i>
-				</h2>
-				<div id="passioni" class="subcategory">
-					<h3>Hobby e Interessi</h3>
-					<ul>
-						<li>Dedica tempo alle tue passioni regolarmente.</li>
-						<li>Esplora nuovi hobby.</li>
-					</ul>
-				</div>
-			</div>
-		</div>
+        .modal-footer button:hover {
+            background-color: #2980b9;
+        }
 
-		<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
-		<script>
-			function toggleSubcategory(id, header) {
-				var subcategory = document.getElementById(id);
-				var isActive = subcategory.classList.contains("active");
-				var toggleIcon = header.querySelector(".toggle-icon");
+        .modal-footer button.cancel {
+            background-color: #ccc;
+            color: #333;
+        }
 
-				if (!isActive) {
-					subcategory.classList.add("active");
-					toggleIcon.classList.remove("fa-chevron-down");
-					toggleIcon.classList.add("fa-chevron-up");
-					header
-						.closest(".category")
-						.scrollIntoView({ behavior: "smooth", block: "start" });
-				} else {
-					subcategory.classList.remove("active");
-					toggleIcon.classList.remove("fa-chevron-up");
-					toggleIcon.classList.add("fa-chevron-down");
-				}
-			}
+        .modal-footer button.cancel:hover {
+            background-color: #bbb;
+        }
 
-			function closeAllSubcategories() {
-				var activeSubcategories = document.querySelectorAll(
-					".subcategory.active"
-				);
-				var toggleIcons = document.querySelectorAll(".toggle-icon");
+        .modal-body label {
+            display: block;
+            margin-bottom: 5px;
+        }
 
-				activeSubcategories.forEach(function (sub) {
-					sub.classList.remove("active");
-				});
-				toggleIcons.forEach(function (icon) {
-					icon.classList.remove("fa-chevron-up");
-					icon.classList.add("fa-chevron-down");
-				});
-			}
+        .modal-body input[type="text"], .modal-body select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            box-sizing: border-box;
+        }
 
-			function searchRules() {
-				var input,
-					filter,
-					categories,
-					subcategories,
-					ul,
-					li,
-					i,
-					j,
-					txtValue,
-					hasResults;
-				input = document.getElementById("searchInput");
-				filter = input.value.toUpperCase();
-				categories = document.querySelectorAll(".category");
+        /* Management Buttons */
+        .management-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            justify-content: flex-start; /* Align buttons to the start */
+            flex-direction: column; /* Stack buttons vertically on smaller screens */
+        }
 
-				categories.forEach((category) => {
-					hasResults = false;
-					category.style.display = "none";
-					subcategories = category.querySelectorAll(".subcategory");
-					ul = category.getElementsByTagName("ul");
-					let categoryHeader = category.querySelector("h2");
+        @media (min-width: 768px) {
+            .management-buttons {
+                flex-direction: row; /* Keep buttons in a row on larger screens */
+            }
+        }
 
-					for (i = 0; i < ul.length; i++) {
-						li = ul[i].getElementsByTagName("li");
-						for (j = 0; j < li.length; j++) {
-							txtValue = li[j].textContent || li[j].innerText;
-							if (txtValue.toUpperCase().indexOf(filter) > -1) {
-								li[j].style.display = "";
-								hasResults = true;
-							} else {
-								li[j].style.display = "none";
-							}
-						}
-					}
 
-					if (hasResults) {
-						category.style.display = "";
-						let subcategoryId = subcategories[0].id;
-						if (subcategoryId) {
-							let subcategoryElement =
-								document.getElementById(subcategoryId);
-							if (
-								!subcategoryElement.classList.contains("active")
-							) {
-								toggleSubcategory(
-									subcategoryId,
-									categoryHeader
-								);
-							}
-						}
-					} else {
-						let subcategoryId = subcategories[0].id;
-						if (subcategoryId) {
-							let subcategoryElement =
-								document.getElementById(subcategoryId);
-							if (
-								subcategoryElement.classList.contains("active")
-							) {
-								toggleSubcategory(
-									subcategoryId,
-									categoryHeader
-								);
-							}
-						}
-					}
-				});
+        .management-buttons button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #27ae60; /* Green color */
+            color: #fff;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+            margin-bottom: 5px; /* Add spacing between buttons when stacked */
+        }
 
-				if (!filter) {
-					categories.forEach((category) => {
-						category.style.display = "";
-						let subcategoryElement =
-							category.querySelector(".subcategory");
-						if (
-							subcategoryElement &&
-							subcategoryElement.classList.contains("active")
-						) {
-							let categoryHeader = category.querySelector("h2");
-							toggleSubcategory(
-								subcategoryElement.id,
-								categoryHeader
-							);
-						}
-					});
-				}
-			}
+        .management-buttons button:hover {
+            background-color: #219653; /* Darker green on hover */
+        }
+        .category-actions, .subcategory-actions, .rule-actions {
+            margin-left: 10px;
+            display: none; /* Inizialmente nascosti */
+            vertical-align: middle; /* Allineamento verticale */
+        }
 
-			function clearSearch() {
-				document.getElementById("searchInput").value = "";
-				searchRules();
-			}
+        .category:hover > h2 > .category-actions, /* Specificità migliorata per categoria */
+        .subcategory-header:hover > h3 > .subcategory-actions, /* Specificità migliorata per sottocategoria */
+        .rule-item:hover > .rule-actions { /* Specificità migliorata per regola */
+            display: inline-block; /* Mostra al passaggio del mouse */
+        }
 
-			function toggleTheme() {
-				const body = document.body;
-				const themeToggle = document.getElementById("themeToggle");
+        /* Stili per i pulsanti Modifica ed Elimina */
+        .category-actions button, .subcategory-actions button, .rule-actions button {
+            background: none;
+            border: none;
+            color: #777;
+            cursor: pointer;
+            margin-left: 10px; /* Aumenta lo spazio tra i pulsanti */
+            font-size: 16px; /* Rendi i pulsanti più grandi */
+            padding: 8px; /* Aggiungi spazio intorno ai pulsanti */
+            transition: color 0.3s ease;
+        }
 
-				body.classList.toggle("dark-theme");
+        .category-actions button:hover, .subcategory-actions button:hover, .rule-actions button:hover {
+            color: #333;
+        }
 
-				if (body.classList.contains("dark-theme")) {
-					themeToggle.innerHTML =
-						'<i class="fas fa-sun"></i> Tema Chiaro';
-				} else {
-					themeToggle.innerHTML =
-						'<i class="fas fa-moon"></i> Tema Scuro';
-				}
+        .dark-theme .category-actions button, .dark-theme .subcategory-actions button, .dark-theme .rule-actions button {
+            color: #bbb;
+        }
 
-				localStorage.setItem(
-					"theme",
-					body.classList.contains("dark-theme") ? "dark" : "light"
-				);
-			}
+        .dark-theme .category-actions button:hover, .dark-theme .subcategory-actions button:hover, .dark-theme .rule-actions button:hover {
+            color: #eee;
+        }
 
-			function isMobileDevice() {
-				return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-					navigator.userAgent
-				);
-			}
+        /* Ottimizzazione per dispositivi mobili */
+        @media (max-width: 768px) {
+            .category-actions, .subcategory-actions, .rule-actions {
+                display: flex; /* Mostra i pulsanti in una riga */
+                gap: 10px; /* Aggiungi spazio tra i pulsanti */
+            }
 
-			document.addEventListener("DOMContentLoaded", function () {
-				var categoriesContainer = document.getElementById(
-					"categoriesContainer"
-				);
-				if (!isMobileDevice()) {
-					// Condizione per non inizializzare su mobile
-					Sortable.create(categoriesContainer, {
-						handle: "h2",
-						animation: 150,
-						onStart: function (evt) {
-							const movedCategory = evt.item;
-							const subcategoryElement =
-								movedCategory.querySelector(".subcategory");
-							const toggleIcon =
-								movedCategory.querySelector(".toggle-icon");
+            .category-actions button, .subcategory-actions button, .rule-actions button {
+                font-size: 18px; /* Rendi i pulsanti ancora più grandi su mobile */
+                padding: 10px; /* Aggiungi più spazio intorno ai pulsanti */
+            }
+        }
+    </style>
+</head>
+<body class="">
+    <h1>Le Mie Regole di Vita</h1>
 
-							if (
-								subcategoryElement.classList.contains("active")
-							) {
-								subcategoryElement.classList.remove("active");
-								toggleIcon.classList.remove("fa-chevron-up");
-								toggleIcon.classList.add("fa-chevron-down");
-							}
-						},
-						onEnd: function (evt) {
-							console.log(
-								"Categoria riordinata",
-								evt.oldIndex,
-								evt.newIndex
-							);
-						},
-					});
-				}
+    <button id="themeToggle" onclick="toggleTheme()">
+        <i class="fas fa-moon"></i> Tema Scuro
+    </button>
+    <button id="closeAllButton" onclick="closeAllSubcategories()">
+        <i class="fas fa-times"></i> Chiudi tutto
+    </button>
 
-				const savedTheme = localStorage.getItem("theme");
-				const body = document.body;
-				const themeToggle = document.getElementById("themeToggle");
+    <div class="management-buttons">
+        <button type="button" onclick="openAddCategoryModal()">Aggiungi Categoria</button>
+        <button type="button" onclick="openAddSubcategoryModal()">Aggiungi Sottocategoria</button>
+        <button type="button" onclick="openAddRuleModal()">Aggiungi Regola</button>
+    </div>
 
-				if (savedTheme === "dark") {
-					body.classList.add("dark-theme");
-					themeToggle.innerHTML =
-						'<i class="fas fa-sun"></i> Tema Chiaro';
-				} else {
-					body.classList.remove("dark-theme");
-					themeToggle.innerHTML =
-						'<i class="fas fa-moon"></i> Tema Scuro';
-				}
-			});
-		</script>
-	</body>
+    <div class="search-container">
+        <i class="fas fa-search"></i>
+        <input
+            type="text"
+            id="searchInput"
+            onkeyup="searchRules()"
+            placeholder="Cerca una regola..."
+        />
+        <i class="fas fa-times clear-icon" onclick="clearSearch()"></i>
+    </div>
+
+    <div id="categoriesContainer">
+        <!-- Categories will be loaded here by JavaScript -->
+    </div>
+
+    <!-- Modals -->
+    <!-- Add Category Modal -->
+    <div id="addCategoryModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close-button" onclick="closeModal('addCategoryModal')">×</span>
+                <h2>Aggiungi Categoria</h2>
+            </div>
+            <div class="modal-body">
+                <label for="categoryName">Nome Categoria:</label>
+                <input type="text" id="categoryName" placeholder="Nome della categoria">
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="addCategory()">Salva</button>
+                <button type="button" class="cancel" onclick="closeModal('addCategoryModal')">Annulla</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Category Modal -->
+    <div id="editCategoryModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close-button" onclick="closeModal('editCategoryModal')">×</span>
+                <h2>Modifica Categoria</h2>
+            </div>
+            <div class="modal-body">
+                <label for="editCategoryName">Nome Categoria:</label>
+                <input type="text" id="editCategoryName" placeholder="Nome della categoria">
+                <input type="hidden" id="editCategoryId">
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="saveEditCategory()">Salva</button>
+                <button type="button" class="cancel" onclick="closeModal('editCategoryModal')">Annulla</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Subcategory Modal -->
+    <div id="addSubcategoryModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close-button" onclick="closeModal('addSubcategoryModal')">×</span>
+                <h2>Aggiungi Sottocategoria</h2>
+            </div>
+            <div class="modal-body">
+                <label for="subcategoryName">Nome Sottocategoria:</label>
+                <input type="text" id="subcategoryName" placeholder="Nome della sottocategoria">
+                <label for="categorySelect">Categoria:</label>
+                <select id="categorySelect"></select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="addSubcategory()">Salva</button>
+                <button type="button" class="cancel" onclick="closeModal('addSubcategoryModal')">Annulla</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Subcategory Modal -->
+    <div id="editSubcategoryModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close-button" onclick="closeModal('editSubcategoryModal')">×</span>
+                <h2>Modifica Sottocategoria</h2>
+            </div>
+            <div class="modal-body">
+                <label for="editSubcategoryName">Nome Sottocategoria:</label>
+                <input type="text" id="editSubcategoryName" placeholder="Nome della sottocategoria">
+                <label for="editCategorySelect">Categoria:</label>
+                <select id="editCategorySelect"></select>
+                <input type="hidden" id="editSubcategoryId">
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="saveEditSubcategory()">Salva</button>
+                <button type="button" class="cancel" onclick="closeModal('editSubcategoryModal')">Annulla</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Rule Modal -->
+    <div id="addRuleModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close-button" onclick="closeModal('addRuleModal')">×</span>
+                <h2>Aggiungi Regola</h2>
+            </div>
+            <div class="modal-body">
+                <label for="ruleText">Testo Regola:</label>
+                <input type="text" id="ruleText" placeholder="Testo della regola">
+                <label for="subcategorySelect">Sottocategoria:</label>
+                <select id="subcategorySelect"></select>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="addRule()">Salva</button>
+                <button type="button" class="cancel" onclick="closeModal('addRuleModal')">Annulla</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Rule Modal -->
+    <div id="editRuleModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close-button" onclick="closeModal('editRuleModal')">×</span>
+                <h2>Modifica Regola</h2>
+            </div>
+            <div class="modal-body">
+                <label for="editRuleText">Testo Regola:</label>
+                <input type="text" id="editRuleText" placeholder="Testo della regola">
+                <label for="editSubcategorySelect">Sottocategoria:</label>
+                <select id="editSubcategorySelect"></select>
+                <input type="hidden" id="editRuleId">
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="saveEditRule()">Salva</button>
+                <button type="button" class="cancel" onclick="closeModal('editRuleModal')">Annulla</button>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+    <script>
+        let categoriesData = loadData() || [
+            {
+                id: 'category-1',
+                name: 'Obiettivi',
+                subcategories: [
+                    {
+                        id: 'subcategory-1',
+                        name: 'A Breve Termine',
+                        rules: [
+                            'Essere promosso senza debiti',
+                            'Trovare e attuare in modo costante un metodo di studio funzionale',
+                            'Trovare e attuare in modo costante una routine funzionale',
+                            'Smettere di mangiarmi e strapparmi le unghie e le pellicine',
+                            'Scegliere un cammino',
+                            'Volere sempre le stesse cose e rifiuatare sempre le stesse cose',
+                            'Imparare ad agire nel momento opportuno senza rimandare'
+                        ]
+                    },
+                    {
+                        id: 'subcategory-2',
+                        name: 'A Lungo Termine',
+                        rules: [
+                            'Essere nel momento presente quasi sempre',
+                            'Avere pieno controllo sulle reazioni alle emozioni',
+                            'Diventare medico',
+                            'Fare il bagno in acqua ghiacciata senza problemi',
+                            'Fare il bagno in acqua ghiacciata',
+                            'Pace interiore e felicità',
+                            'Ottima capacità critica',
+                            'Capacità di ammettere gli errori',
+                            'Non sentire il bisogno di mentire e non farlo',
+                            'Capacità di distinguere il giusto dallo sbagliato e compiere il bene'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'category-2',
+                name: 'Salute',
+                subcategories: [
+                    {
+                        id: 'subcategory-3',
+                        name: 'Alimentazione',
+                        rules: [
+                            'Segui la dieta.',
+                            'Bevi almeno 2 litri di acqua al giorno.',
+                            'Permettiti un pasto a piacere a settimana, che non sia troppo abbondante (es. piadina)',
+                            'NIENTE bevande gassate a meno che non sia un\'occasione particolare',
+                            'NIENTE cibo spazzatura a meno che non sia un\'occasione particolare',
+                            'NIENTE alcol, fumo e droghe'
+                        ]
+                    },
+                    {
+                        id: 'subcategory-4',
+                        name: 'Esercizio Fisico e Benessere mentale',
+                        rules: [
+                            'Allenati dalle 3 alle 6 volte a settimana',
+                            'Muoviti almeno un po\' nei giorni in cui non ti alleni',
+                            'Fai doccia fredda almeno 6 volte a settimana',
+                            'Fai 4 round della tecnica di respirazione WHM (Prima di colazione) almeno 6 volte a settimana',
+                            'Medita almeno 5 minuti al giorno'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'category-3',
+                name: 'Scuola',
+                subcategories: [
+                    {
+                        id: 'subcategory-5',
+                        name: 'Produttività',
+                        rules: [
+                            'Usa la tecnica del Pomodoro per gestire il tempo.',
+                            'Pianifica la domenica la settimana successiva',
+                            'Controlla ogni sera il piano e vedi se ci sono modifiche da apportare per i giorni seguenti'
+                        ]
+                    },
+                    {
+                        id: 'subcategory-6',
+                        name: 'Relazioni',
+                        rules: [
+                            'Sii sempre rispettoso con i compagni. (evitando anche insulti e offese)',
+                            'Comunica in modo chiaro e diretto, senza parlare troppo veloce e scandendo bene le parole'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'category-4',
+                name: 'Lavoro',
+                subcategories: [
+                    {
+                        id: 'subcategory-7',
+                        name: 'Produttività',
+                        rules: [
+                            'Usa la tecnica del Pomodoro per gestire il tempo.',
+                            'Fai una lista delle priorità ogni mattina.'
+                        ]
+                    },
+                    {
+                        id: 'subcategory-8',
+                        name: 'Relazioni',
+                        rules: [
+                            'Sii sempre rispettoso con i colleghi.',
+                            'Comunica in modo chiaro e diretto.'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'category-5',
+                name: 'Relazioni',
+                subcategories: [
+                    {
+                        id: 'subcategory-9',
+                        name: 'Amicizie',
+                        rules: [
+                            'Sii sempre sincero con gli amici.',
+                            'Passa del tempo di qualità con loro.',
+                            'Aiutali se hanno bisogno',
+                            'Rispetta anche chi ti ha mancato di rispetto e chi ti ha tradito, se ha bisogno di aiuto aiutalo mantenendo le distanze e chiarendo il perchè lo fai'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'category-6',
+                name: 'Mindset',
+                subcategories: [
+                    {
+                        id: 'subcategory-10',
+                        name: 'Crescita Personale',
+                        rules: [
+                            'Sii sempre aperto all\'apprendimento.',
+                            'Affronta le sfide con positività.'
+                        ]
+                    }
+                ]
+            },
+            {
+                id: 'category-7',
+                name: 'Passioni',
+                subcategories: [
+                    {
+                        id: 'subcategory-11',
+                        name: 'Hobby e Interessi',
+                        rules: [
+                            'Dedica tempo alle tue passioni regolarmente.',
+                            'Esplora nuovi hobby.'
+                        ]
+                    }
+                ]
+            }
+        ];
+
+        function saveData() {
+            localStorage.setItem('categoriesData', JSON.stringify(categoriesData));
+        }
+
+        function loadData() {
+            const data = localStorage.getItem('categoriesData');
+            return data ? JSON.parse(data) : null;
+        }
+
+        function renderCategories() {
+            const categoriesContainer = document.getElementById('categoriesContainer');
+            categoriesContainer.innerHTML = '';
+            categoriesData.forEach(category => {
+                const categoryDiv = createCategoryElement(category);
+                categoriesContainer.appendChild(categoryDiv);
+            });
+            updateCategorySelectOptions();
+            updateSubcategorySelectOptions();
+        }
+
+        function createCategoryElement(category) {
+            const categoryDiv = document.createElement('div');
+            categoryDiv.className = 'category';
+            categoryDiv.dataset.categoryId = category.id;
+
+            const categoryHeader = document.createElement('h2');
+            categoryHeader.onclick = () => toggleSubcategory(category.id, categoryHeader);
+            let categoryIconClass = '';
+
+            switch (category.name) {
+                case 'Obiettivi':
+                    categoryIconClass = 'fa-bullseye';
+                    break;
+                case 'Salute':
+                    categoryIconClass = 'fa-heartbeat';
+                    break;
+                case 'Scuola':
+                    categoryIconClass = 'fa-graduation-cap';
+                    break;
+                case 'Lavoro':
+                    categoryIconClass = 'fa-briefcase';
+                    break;
+                case 'Relazioni':
+                    categoryIconClass = 'fa-users';
+                    break;
+                case 'Mindset':
+                    categoryIconClass = 'fa-brain';
+                    break;
+                case 'Passioni':
+                    categoryIconClass = 'fa-star';
+                    break;
+                default:
+                    categoryIconClass = 'fa-list'; // Icona di default
+            }
+
+
+            categoryHeader.innerHTML = `
+                <span><i class="fas ${categoryIconClass}"></i> ${category.name}</span>
+                <i class="fas fa-chevron-down toggle-icon"></i>
+            `;
+
+            const categoryActions = document.createElement('div');
+            categoryActions.className = 'category-actions';
+            categoryActions.innerHTML = `
+                <button type="button" onclick="deleteCategory('${category.id}')" title="Elimina Categoria"><i class="fas fa-trash"></i></button>
+            `;
+            categoryHeader.appendChild(categoryActions);
+
+            const subcategoryDiv = document.createElement('div');
+            subcategoryDiv.id = category.id; // Use category ID for subcategory div ID
+            subcategoryDiv.className = 'subcategory';
+
+            category.subcategories.forEach(subcategory => {
+                const subcategoryElement = createSubcategoryElement(subcategory);
+                subcategoryDiv.appendChild(subcategoryElement);
+            });
+
+            categoryDiv.appendChild(categoryHeader);
+            categoryDiv.appendChild(subcategoryDiv);
+            return categoryDiv;
+        }
+
+        function createSubcategoryElement(subcategory) {
+            const subcategoryContainer = document.createElement('div');
+            subcategoryContainer.className = 'subcategory-header'; // Added class for styling/actions
+            subcategoryContainer.dataset.subcategoryId = subcategory.id;
+
+            const subcategoryHeader = document.createElement('h3');
+            subcategoryHeader.textContent = subcategory.name;
+
+            const subcategoryActions = document.createElement('div');
+            subcategoryActions.className = 'subcategory-actions';
+            subcategoryActions.innerHTML = `
+                <button type="button" onclick="deleteSubcategory('${subcategory.id}')" title="Elimina Sottocategoria"><i class="fas fa-trash"></i></button>
+            `;
+            subcategoryHeader.appendChild(subcategoryActions);
+
+            const rulesList = document.createElement('ul');
+            subcategory.rules.forEach(ruleText => {
+                const ruleItem = createRuleElement(ruleText, subcategory.id);
+                rulesList.appendChild(ruleItem);
+            });
+
+            subcategoryContainer.appendChild(subcategoryHeader);
+            subcategoryContainer.appendChild(rulesList);
+            return subcategoryContainer;
+        }
+
+        function createRuleElement(ruleText, subcategoryId) {
+            const ruleItem = document.createElement('li');
+            ruleItem.className = 'rule-item';
+            ruleItem.dataset.ruleSubcategoryId = subcategoryId;
+            ruleItem.innerHTML = `
+                <span>${ruleText}</span>
+                <div class="rule-actions">
+                    <button type="button" onclick="deleteRule('${ruleText}', '${subcategoryId}', this)" title="Elimina Regola"><i class="fas fa-trash"></i></button>
+                </div>
+            `;
+            return ruleItem;
+        }
+
+
+        function toggleSubcategory(categoryId, header) {
+            var subcategory = document.getElementById(categoryId);
+            var isActive = subcategory.classList.contains("active");
+            var toggleIcon = header.querySelector(".toggle-icon");
+
+            if (!isActive) {
+                subcategory.classList.add("active");
+                toggleIcon.classList.remove("fa-chevron-down");
+                toggleIcon.classList.add("fa-chevron-up");
+                header
+                    .closest(".category")
+                    .scrollIntoView({ behavior: "smooth", block: "start" });
+            } else {
+                subcategory.classList.remove("active");
+                toggleIcon.classList.remove("fa-chevron-up");
+                toggleIcon.classList.add("fa-chevron-down");
+            }
+        }
+
+        function closeAllSubcategories() {
+            var activeSubcategories = document.querySelectorAll(
+                ".subcategory.active"
+            );
+            var toggleIcons = document.querySelectorAll(".toggle-icon");
+
+            activeSubcategories.forEach(function (sub) {
+                sub.classList.remove("active");
+            });
+            toggleIcons.forEach(function (icon) {
+                icon.classList.remove("fa-chevron-up");
+                icon.classList.add("fa-chevron-down");
+            });
+        }
+
+        function searchRules() {
+            var input,
+                filter,
+                categories,
+                subcategories,
+                ul,
+                li,
+                i,
+                j,
+                txtValue,
+                hasResults;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            categories = document.querySelectorAll(".category");
+
+            categories.forEach((category) => {
+                hasResults = false;
+                category.style.display = "none";
+                subcategories = category.querySelectorAll(".subcategory");
+                ul = category.getElementsByTagName("ul");
+                let categoryHeader = category.querySelector("h2");
+
+                for (i = 0; i < ul.length; i++) {
+                    li = ul[i].getElementsByTagName("li");
+                    for (j = 0; j < li.length; j++) {
+                        txtValue = li[j].textContent || li[j].innerText;
+                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                            li[j].style.display = "";
+                            hasResults = true;
+                        } else {
+                            li[j].style.display = "none";
+                        }
+                    }
+                }
+
+                if (hasResults) {
+                    category.style.display = "";
+                    let subcategoryId = subcategories[0].id;
+                    if (subcategoryId) {
+                        let subcategoryElement =
+                            document.getElementById(subcategoryId);
+                        if (
+                            !subcategoryElement.classList.contains("active")
+                        ) {
+                            toggleSubcategory(
+                                subcategoryId,
+                                categoryHeader
+                            );
+                        }
+                    }
+                } else {
+                    let subcategoryId = subcategories[0].id;
+                    if (subcategoryId) {
+                        let subcategoryElement =
+                            document.getElementById(subcategoryId);
+                        if (
+                            subcategoryElement.classList.contains("active")
+                        ) {
+                            toggleSubcategory(
+                                subcategoryId,
+                                categoryHeader
+                            );
+                        }
+                    }
+                }
+            });
+
+            if (!filter) {
+                categories.forEach((category) => {
+                    category.style.display = "";
+                    let subcategoryElement =
+                        category.querySelector(".subcategory");
+                    if (
+                        subcategoryElement &&
+                        subcategoryElement.classList.contains("active")
+                    ) {
+                        let categoryHeader = category.querySelector("h2");
+                        toggleSubcategory(
+                            subcategoryElement.id,
+                            categoryHeader
+                        );
+                    }
+                });
+            }
+        }
+
+        function clearSearch() {
+            document.getElementById("searchInput").value = "";
+            searchRules();
+        }
+
+        function toggleTheme() {
+            const body = document.body;
+            const themeToggle = document.getElementById("themeToggle");
+
+            body.classList.toggle("dark-theme");
+
+            if (body.classList.contains("dark-theme")) {
+                themeToggle.innerHTML =
+                    '<i class="fas fa-sun"></i> Tema Chiaro';
+            } else {
+                themeToggle.innerHTML =
+                    '<i class="fas fa-moon"></i> Tema Scuro';
+            }
+
+            localStorage.setItem(
+                "theme",
+                body.classList.contains("dark-theme") ? "dark" : "light"
+            );
+        }
+
+        function isMobileDevice() {
+            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+                navigator.userAgent
+            );
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            renderCategories();
+
+            var categoriesContainer = document.getElementById(
+                "categoriesContainer"
+            );
+            if (!isMobileDevice()) {
+                // Condizione per non inizializzare su mobile
+                Sortable.create(categoriesContainer, {
+                    handle: "h2",
+                    animation: 150,
+                    onStart: function (evt) {
+                        const movedCategory = evt.item;
+                        const subcategoryElement =
+                            movedCategory.querySelector(".subcategory");
+                        const toggleIcon =
+                            movedCategory.querySelector(".toggle-icon");
+
+                        if (
+                            subcategoryElement.classList.contains("active")
+                        ) {
+                            subcategoryElement.classList.remove("active");
+                            toggleIcon.classList.remove("fa-chevron-up");
+                            toggleIcon.classList.add("fa-chevron-down");
+                        }
+                    },
+                    onEnd: function (evt) {
+                        //console.log(
+                        //    "Categoria riordinata",
+                        //    evt.oldIndex,
+                        //    evt.newIndex
+                        //);
+                        updateCategoryOrder();
+                    },
+                });
+            }
+
+            const savedTheme = localStorage.getItem("theme");
+            const body = document.body;
+            const themeToggle = document.getElementById("themeToggle");
+
+            if (savedTheme === "dark") {
+                body.classList.add("dark-theme");
+                themeToggle.innerHTML =
+                    '<i class="fas fa-sun"></i> Tema Chiaro';
+            } else {
+                body.classList.remove("dark-theme");
+                themeToggle.innerHTML =
+                    '<i class="fas fa-moon"></i> Tema Scuro';
+            }
+        });
+
+        // Modal Functions
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'block';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        // Category Management
+        function openAddCategoryModal() {
+            document.getElementById('categoryName').value = ''; // Clear input field
+            openModal('addCategoryModal');
+        }
+
+        function addCategory() {
+            const categoryName = document.getElementById('categoryName').value;
+            if (categoryName) {
+                const newCategory = {
+                    id: 'category-' + Date.now(), // Generate unique ID
+                    name: categoryName,
+                    subcategories: []
+                };
+                categoriesData.push(newCategory);
+                saveData();
+                renderCategories();
+                closeModal('addCategoryModal');
+            } else {
+                alert('Inserisci il nome della categoria.');
+            }
+        }
+
+        function openEditCategoryModal(categoryId) {
+            const category = categoriesData.find(cat => cat.id === categoryId);
+            if (category) {
+                document.getElementById('editCategoryName').value = category.name;
+                document.getElementById('editCategoryId').value = categoryId;
+                openModal('editCategoryModal');
+            }
+        }
+
+        function saveEditCategory() {
+            const categoryId = document.getElementById('editCategoryId').value;
+            const newCategoryName = document.getElementById('editCategoryName').value;
+            if (newCategoryName) {
+                const categoryIndex = categoriesData.findIndex(cat => cat.id === categoryId);
+                if (categoryIndex !== -1) {
+                    categoriesData[categoryIndex].name = newCategoryName;
+                    saveData();
+                    renderCategories();
+                    closeModal('editCategoryModal');
+                }
+            } else {
+                alert('Inserisci il nuovo nome della categoria.');
+            }
+        }
+
+        function deleteCategory(categoryId) {
+            if (confirm('Sei sicuro di voler eliminare questa categoria e tutte le sue sottocategorie e regole?')) {
+                categoriesData = categoriesData.filter(cat => cat.id !== categoryId);
+                saveData();
+                renderCategories();
+            }
+        }
+
+        // Subcategory Management
+        function openAddSubcategoryModal() {
+            document.getElementById('subcategoryName').value = ''; // Clear input field
+            updateCategorySelectOptions();
+            openModal('addSubcategoryModal');
+        }
+
+        function addSubcategory() {
+            const subcategoryName = document.getElementById('subcategoryName').value;
+            const categoryId = document.getElementById('categorySelect').value;
+            if (subcategoryName && categoryId) {
+                const newSubcategory = {
+                    id: 'subcategory-' + Date.now(), // Generate unique ID
+                    name: subcategoryName,
+                    rules: []
+                };
+                const category = categoriesData.find(cat => cat.id === categoryId);
+                if (category) {
+                    category.subcategories.push(newSubcategory);
+                    saveData();
+                    renderCategories();
+                    closeModal('addSubcategoryModal');
+                }
+            } else {
+                alert('Inserisci il nome della sottocategoria e seleziona una categoria.');
+            }
+        }
+
+        function openEditSubcategoryModal(subcategoryId) {
+            const subcategoryData = findSubcategory(subcategoryId);
+            if (subcategoryData) {
+                document.getElementById('editSubcategoryName').value = subcategoryData.subcategory.name;
+                document.getElementById('editSubcategoryId').value = subcategoryId;
+                updateCategorySelectOptions('editCategorySelect', subcategoryData.category.id);
+                openModal('editSubcategoryModal');
+            }
+        }
+
+        function saveEditSubcategory() {
+            const subcategoryId = document.getElementById('editSubcategoryId').value;
+            const newSubcategoryName = document.getElementById('editSubcategoryName').value;
+            const newCategoryId = document.getElementById('editCategorySelect').value;
+
+            if (newSubcategoryName && newCategoryId) {
+                const subcategoryInfo = findSubcategory(subcategoryId);
+                if (subcategoryInfo) {
+                    if (subcategoryInfo.category.id !== newCategoryId) {
+                        subcategoryInfo.category.subcategories = subcategoryInfo.category.subcategories.filter(sub => sub.id !== subcategoryId);
+                        const newCategory = categoriesData.find(cat => cat.id === newCategoryId);
+                        if (newCategory) {
+                            newCategory.subcategories.push(subcategoryInfo.subcategory);
+                        }
+                    }
+                    subcategoryInfo.subcategory.name = newSubcategoryName;
+                    saveData();
+                    renderCategories();
+                    closeModal('editSubcategoryModal');
+                }
+            } else {
+                alert('Inserisci il nuovo nome della sottocategoria e seleziona una categoria.');
+            }
+        }
+
+
+        function deleteSubcategory(subcategoryId) {
+            if (confirm('Sei sicuro di voler eliminare questa sottocategoria e tutte le sue regole?')) {
+                const subcategoryInfo = findSubcategory(subcategoryId);
+                if (subcategoryInfo) {
+                    subcategoryInfo.category.subcategories = subcategoryInfo.category.subcategories.filter(sub => sub.id !== subcategoryId);
+                    saveData();
+                    renderCategories();
+                }
+            }
+        }
+
+        // Rule Management
+        function openAddRuleModal() {
+            document.getElementById('ruleText').value = ''; // Clear input field
+            updateSubcategorySelectOptions();
+            openModal('addRuleModal');
+        }
+
+        // Funzione per aprire il modale di modifica di una regola
+        function openEditRuleModal(ruleText, subcategoryId, ruleElement) {
+            document.getElementById('editRuleText').value = ruleText;
+            document.getElementById('editRuleId').value = ruleText; // Usa il testo della regola come ID temporaneo
+            document.getElementById('editRuleSubcategoryId').value = subcategoryId;
+            updateSubcategorySelectOptions('editSubcategorySelect', subcategoryId);
+            openModal('editRuleModal');
+        }
+
+        function addRule() {
+            const ruleText = document.getElementById('ruleText').value;
+            const subcategoryId = document.getElementById('subcategorySelect').value;
+            if (ruleText && subcategoryId) {
+                const subcategoryInfo = findSubcategory(subcategoryId);
+                if (subcategoryInfo) {
+                    subcategoryInfo.subcategory.rules.push(ruleText);
+                    saveData();
+                    renderCategories();
+                    closeModal('addRuleModal');
+                }
+            } else {
+                alert('Inserisci il testo della regola e seleziona una sottocategoria.');
+            }
+        }
+
+        // Funzione per salvare le modifiche a una regola (con feedback visivo)
+        function saveEditRule() {
+            const newRuleText = document.getElementById('editRuleText').value;
+            const originalRuleText = document.getElementById('editRuleId').value;
+            const subcategoryId = document.getElementById('editSubcategorySelect').value;
+
+            if (newRuleText && subcategoryId) {
+                const subcategoryInfo = findSubcategory(subcategoryId);
+                if (subcategoryInfo) {
+                    const ruleIndex = subcategoryInfo.subcategory.rules.indexOf(originalRuleText);
+                    if (ruleIndex !== -1) {
+                        subcategoryInfo.subcategory.rules[ruleIndex] = newRuleText;
+                        saveData();
+                        renderCategories();
+                        closeModal('editRuleModal');
+                        alert('Regola modificata con successo!'); // Feedback visivo
+                    }
+                }
+            } else {
+                alert('Inserisci il nuovo testo della regola e seleziona una sottocategoria.');
+            }
+        }
+
+
+        function deleteRule(ruleText, subcategoryId, ruleElement) {
+            if (confirm('Sei sicuro di voler eliminare questa regola?')) {
+                const subcategoryInfo = findSubcategory(subcategoryId);
+                if (subcategoryInfo) {
+                    const ruleIndex = subcategoryInfo.subcategory.rules.indexOf(ruleText);
+                    if (ruleIndex !== -1) {
+                        subcategoryInfo.subcategory.rules.splice(ruleIndex, 1);
+                        saveData();
+                        renderCategories();
+                    }
+                }
+            }
+        }
+
+
+        // Helper functions for select options
+        function updateCategorySelectOptions(selectId = 'categorySelect', selectedCategoryId = null) {
+            const selectElement = document.getElementById(selectId);
+            selectElement.innerHTML = ''; // Clear existing options
+            categoriesData.forEach(category => {
+                const option = document.createElement('option');
+                option.value = category.id;
+                option.textContent = category.name;
+                if (category.id === selectedCategoryId) {
+                    option.selected = true;
+                }
+                selectElement.appendChild(option);
+            });
+        }
+
+        function updateSubcategorySelectOptions(selectId = 'subcategorySelect', selectedSubcategoryId = null) {
+            const selectElement = document.getElementById(selectId);
+            selectElement.innerHTML = ''; // Clear existing options
+            categoriesData.forEach(category => {
+                category.subcategories.forEach(subcategory => {
+                    const option = document.createElement('option');
+                    option.value = subcategory.id;
+                    option.textContent = `${category.name} - ${subcategory.name}`;
+                    if (subcategory.id === selectedSubcategoryId) {
+                        option.selected = true;
+                    }
+                    selectElement.appendChild(option);
+                });
+            });
+        }
+
+        // Helper function to find subcategory and its category
+        function findSubcategory(subcategoryId) {
+            for (const category of categoriesData) {
+                const subcategory = category.subcategories.find(sub => sub.id === subcategoryId);
+                if (subcategory) {
+                    return { category: category, subcategory: subcategory };
+                }
+            }
+            return null;
+        }
+
+        function updateCategoryOrder() {
+            const categoriesContainer = document.getElementById('categoriesContainer');
+            const categoryElements = Array.from(categoriesContainer.children);
+            const orderedCategoryIds = categoryElements.map(el => el.dataset.categoryId);
+
+            const orderedCategoriesData = [];
+            orderedCategoryIds.forEach(categoryId => {
+                const category = categoriesData.find(cat => cat.id === categoryId);
+                if (category) {
+                    orderedCategoriesData.push(category);
+                }
+            });
+            categoriesData = orderedCategoriesData;
+            saveData();
+        }
+
+
+    </script>
+</body>
 </html>
