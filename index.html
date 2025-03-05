@@ -1,539 +1,678 @@
 <!DOCTYPE html>
 <html lang="it">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Le Mie Regole di Vita</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            margin: 20px;
-            padding-top: 60px;
-            background-color: #f9f9f9;
-            color: #333;
-            transition: background-color 0.3s, color 0.3s;
-        }
-        body.dark-theme {
-            background-color: #222;
-            color: #eee;
-        }
-        h1 {
-            color: #2c3e50;
-            text-align: center;
-            margin-bottom: 20px;
-            transition: color 0.3s;
-        }
-        .dark-theme h1 {
-            color: #eee;
-        }
-        #themeToggle {
-            position: fixed;
-            top: 20px;
-            left: 20px;
-            z-index: 1000;
-            padding: 10px 15px;
-            background-color: #3498db;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .dark-theme #themeToggle {
-            background-color: white;
-            color: #222;
-        }
-        .dark-theme #themeToggle:hover {
-            background-color: white;
-            color: #222;
-        }
-        #themeToggle:hover {
-            background-color: #2980b9;
-            transform: translateY(-1px);
-        }
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Le Mie Regole di Vita</title>
+		<link
+			rel="stylesheet"
+			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+		/>
+		<style>
+			body {
+				font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+				line-height: 1.6;
+				margin: 20px;
+				padding-top: 60px;
+				background-color: #f9f9f9;
+				color: #333;
+				transition: background-color 0.3s, color 0.3s;
+			}
+			body.dark-theme {
+				background-color: #222;
+				color: #eee;
+			}
+			h1 {
+				color: #2c3e50;
+				text-align: center;
+				margin-bottom: 20px;
+				transition: color 0.3s;
+			}
+			.dark-theme h1 {
+				color: #eee;
+			}
+			#themeToggle {
+				position: fixed;
+				top: 20px;
+				left: 20px;
+				z-index: 1000;
+				padding: 10px 15px;
+				background-color: #3498db;
+				color: #fff;
+				border: none;
+				border-radius: 5px;
+				cursor: pointer;
+				font-size: 16px;
+				transition: background-color 0.3s ease, color 0.3s ease,
+					transform 0.2s ease;
+				display: flex;
+				align-items: center;
+				gap: 8px;
+			}
+			.dark-theme #themeToggle {
+				background-color: white;
+				color: #222;
+			}
+			.dark-theme #themeToggle:hover {
+				background-color: white;
+				color: #222;
+			}
+			#themeToggle:hover {
+				background-color: #2980b9;
+				transform: translateY(-1px);
+			}
 
-        #closeAllButton {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-            padding: 10px 15px;
-            background-color: #e74c3c;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s ease;
-        }
-        #closeAllButton:hover {
-            background-color: #c0392b;
-        }
-        h2 {
-            color: #34495e;
-            cursor: pointer;
-            padding: 10px;
-            background-color: #ecf0f1;
-            border-radius: 5px;
-            transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease, color 0.3s;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0;
-        }
-        .dark-theme h2 {
-            background-color: #444;
-            color: #fff;
-        }
-        h2:hover {
-            background-color: #bdc3c7;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        .category {
-            margin-bottom: 20px;
-            padding-bottom: 0;
-            border-bottom: none;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            border-radius: 5px;
-            overflow: hidden;
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeIn 0.5s ease-out forwards;
-        }
-        .dark-theme .category {
-            box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
-        }
-        @keyframes fadeIn {
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .category:nth-child(2) { animation-delay: 0.1s; }
-        .category:nth-child(3) { animation-delay: 0.2s; }
-        .category:nth-child(4) { animation-delay: 0.3s; }
-        .category:nth-child(5) { animation-delay: 0.4s; }
-        .category:nth-child(6) { animation-delay: 0.5s; }
-        .category:nth-child(7) { animation-delay: 0.6s; }
+			#closeAllButton {
+				position: fixed;
+				top: 20px;
+				right: 20px;
+				z-index: 1000;
+				padding: 10px 15px;
+				background-color: #e74c3c;
+				color: #fff;
+				border: none;
+				border-radius: 5px;
+				cursor: pointer;
+				font-size: 16px;
+				transition: background-color 0.3s ease;
+			}
+			#closeAllButton:hover {
+				background-color: #c0392b;
+			}
+			h2 {
+				color: #34495e;
+				cursor: pointer;
+				padding: 10px;
+				background-color: #ecf0f1;
+				border-radius: 5px;
+				transition: background-color 0.3s ease, transform 0.2s ease,
+					box-shadow 0.2s ease, color 0.3s;
+				display: flex;
+				justify-content: space-between;
+				align-items: center;
+				margin-bottom: 0;
+			}
+			.dark-theme h2 {
+				background-color: #444;
+				color: #fff;
+			}
+			h2:hover {
+				background-color: #bdc3c7;
+				transform: translateY(-2px);
+				box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+			}
+			.category {
+				margin-bottom: 20px;
+				padding-bottom: 0;
+				border-bottom: none;
+				box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+				border-radius: 5px;
+				overflow: hidden;
+				opacity: 0;
+				transform: translateY(20px);
+				animation: fadeIn 0.5s ease-out forwards;
+			}
+			.dark-theme .category {
+				box-shadow: 0 2px 5px rgba(255, 255, 255, 0.1);
+			}
+			@keyframes fadeIn {
+				to {
+					opacity: 1;
+					transform: translateY(0);
+				}
+			}
+			.category:nth-child(2) {
+				animation-delay: 0.1s;
+			}
+			.category:nth-child(3) {
+				animation-delay: 0.2s;
+			}
+			.category:nth-child(4) {
+				animation-delay: 0.3s;
+			}
+			.category:nth-child(5) {
+				animation-delay: 0.4s;
+			}
+			.category:nth-child(6) {
+				animation-delay: 0.5s;
+			}
+			.category:nth-child(7) {
+				animation-delay: 0.6s;
+			}
 
-        .subcategory {
-            margin-left: 0;
-            display: none;
-            padding: 15px;
-            background-color: #fff;
-            border-top: 1px solid #eee;
-            border-radius: 0 0 5px 5px;
-            overflow: hidden;
-            max-height: 0;
-            opacity: 0;
-            transition: max-height 0.4s ease-in-out, opacity 0.4s ease-in-out, background-color 0.3s, color 0.3s;
-        }
-        .dark-theme .subcategory {
-            background-color: #333;
-            border-top: 1px solid #555;
-        }
-        .subcategory.active {
-            display: block;
-            max-height: 800px;
-            opacity: 1;
-        }
-        .subcategory:nth-child(odd) {
-            background-color: #f9f9f9;
-        }
-        .dark-theme .subcategory:nth-child(odd) {
-            background-color: #3a3a3a;
-        }
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-        li {
-            padding: 10px;
-            margin: 8px 0;
-            background-color: #f1f1f1;
-            border-radius: 3px;
-            transition: background-color 0.3s ease, color 0.3s;
-        }
-        .dark-theme li {
-            background-color: #444;
-            color: #eee;
-        }
-        li:hover {
-            background-color: #e8e8e8;
-        }
-        .dark-theme li:hover {
-            background-color: #555;
-        }
+			.subcategory {
+				margin-left: 0;
+				display: none;
+				padding: 15px;
+				background-color: #fff;
+				border-top: 1px solid #eee;
+				border-radius: 0 0 5px 5px;
+				overflow: hidden;
+				max-height: 0;
+				opacity: 0;
+				transition: max-height 0.4s ease-in-out,
+					opacity 0.4s ease-in-out, background-color 0.3s, color 0.3s;
+			}
+			.dark-theme .subcategory {
+				background-color: #333;
+				border-top: 1px solid #555;
+			}
+			.subcategory.active {
+				display: block;
+				max-height: 800px;
+				opacity: 1;
+			}
+			.subcategory:nth-child(odd) {
+				background-color: #f9f9f9;
+			}
+			.dark-theme .subcategory:nth-child(odd) {
+				background-color: #3a3a3a;
+			}
+			ul {
+				list-style-type: none;
+				padding: 0;
+			}
+			li {
+				padding: 10px;
+				margin: 8px 0;
+				background-color: #f1f1f1;
+				border-radius: 3px;
+				transition: background-color 0.3s ease, color 0.3s;
+			}
+			.dark-theme li {
+				background-color: #444;
+				color: #eee;
+			}
+			li:hover {
+				background-color: #e8e8e8;
+			}
+			.dark-theme li:hover {
+				background-color: #555;
+			}
 
-        .search-container {
-            display: flex;
-            align-items: center;
-            border: 2px solid #3498db;
-            border-radius: 5px;
-            padding: 5px 10px;
-            margin-bottom: 20px;
-            transition: border-color 0.3s ease;
-            background-color: white;
-        }
-        .dark-theme .search-container {
-            background-color: #333;
-            border-color: white; /* White border in dark mode */
-        }
+			.search-container {
+				display: flex;
+				align-items: center;
+				border: 2px solid #3498db;
+				border-radius: 5px;
+				padding: 5px 10px;
+				margin-bottom: 20px;
+				transition: border-color 0.3s ease;
+				background-color: white;
+			}
+			.dark-theme .search-container {
+				background-color: #333;
+				border-color: white; /* White border in dark mode */
+			}
 
-        .dark-theme .search-container:focus-within {
-            border-color: white; /* White border on focus in dark mode */
-            box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* White shadow on focus in dark mode */
-        }
+			.dark-theme .search-container:focus-within {
+				border-color: white; /* White border on focus in dark mode */
+				box-shadow: 0 0 5px rgba(255, 255, 255, 0.5); /* White shadow on focus in dark mode */
+			}
 
+			.search-container:focus-within {
+				border-color: #2980b9;
+				box-shadow: 0 0 5px rgba(41, 128, 185, 0.5);
+			}
 
-        .search-container:focus-within {
-            border-color: #2980b9;
-            box-shadow: 0 0 5px rgba(41, 128, 185, 0.5);
-        }
+			.search-container i {
+				margin-right: 10px;
+				color: #3498db;
+				cursor: pointer;
+				transition: color 0.3s ease;
+			}
+			.dark-theme .search-container i {
+				color: white; /* White icon in dark mode */
+			}
 
+			#searchInput {
+				flex: 1;
+				border: none;
+				outline: none;
+				font-size: 16px;
+				background-color: transparent;
+				color: inherit;
+			}
 
-        .search-container i {
-            margin-right: 10px;
-            color: #3498db;
-            cursor: pointer;
-            transition: color 0.3s ease;
-        }
-        .dark-theme .search-container i {
-            color: white; /* White icon in dark mode */
-        }
+			.clear-icon {
+				opacity: 0;
+				transition: opacity 0.3s;
+			}
 
-        #searchInput {
-            flex: 1;
-            border: none;
-            outline: none;
-            font-size: 16px;
-            background-color: transparent;
-            color: inherit;
-        }
+			.search-container:focus-within .clear-icon,
+			.search-container:has(input:not(:placeholder-shown)) .clear-icon {
+				opacity: 1;
+			}
 
+			@media (max-width: 768px) {
+				#themeToggle {
+					left: 10px;
+				}
+				#closeAllButton {
+					right: 10px;
+				}
+			}
+		</style>
+	</head>
+	<body class="">
+		<h1>Le Mie Regole di Vita</h1>
 
-        .clear-icon {
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
+		<button id="themeToggle" onclick="toggleTheme()">
+			<i class="fas fa-moon"></i> Tema Scuro
+		</button>
+		<button id="closeAllButton" onclick="closeAllSubcategories()">
+			<i class="fas fa-times"></i> Chiudi tutto
+		</button>
 
-        .search-container:focus-within .clear-icon,
-        .search-container:has(input:not(:placeholder-shown)) .clear-icon {
-            opacity: 1;
-        }
+		<div class="search-container">
+			<i class="fas fa-search"></i>
+			<input
+				type="text"
+				id="searchInput"
+				onkeyup="searchRules()"
+				placeholder="Cerca una regola..."
+			/>
+			<i class="fas fa-times clear-icon" onclick="clearSearch()"></i>
+		</div>
 
+		<div id="categoriesContainer">
+			<div class="category" data-category-name="Obiettivi">
+				<h2 onclick="toggleSubcategory('obiettivi', this)">
+					<span><i class="fas fa-bullseye"></i> Obiettivi</span>
+					<i class="fas fa-chevron-down toggle-icon"></i>
+				</h2>
+				<div id="obiettivi" class="subcategory">
+					<h3>A Breve Termine</h3>
+					<ul>
+						<li>Essere promosso senza debiti</li>
+						<li>
+							Trovare e attuare in modo costante un metodo di
+							studio funzionale
+						</li>
+						<li>
+							Trovare e attuare in modo costante una routine
+							funzionale
+						</li>
+						<li>
+							Smettere di mangiarmi e strapparmi le unghie e le
+							pellicine
+						</li>
+						<li>Scegliere un cammino</li>
+						<li>
+							Volere sempre le stesse cose e rifiuatare sempre le
+							stesse cose
+						</li>
+						<li>
+							Imparare ad agire nel momento opportuno senza
+							rimandare
+						</li>
+					</ul>
+					<h3>A Lungo Termine</h3>
+					<ul>
+						<li>Essere nel momento presente quasi sempre</li>
+						<li>
+							Avere pieno controllo sulle reazioni alle emozioni
+						</li>
+						<li>Diventare medico</li>
+						<li>
+							Fare il bagno in acqua ghiacciata senza problemi
+						</li>
+						<li>Fare il bagno in acqua ghiacciata</li>
+						<li>Pace interiore e felicità</li>
+						<li>Ottima capacità critica</li>
+						<li>Capacità di ammettere gli errori</li>
+						<li>Non sentire il bisogno di mentire e non farlo</li>
+						<li>
+							Capacità di distinguere il giusto dallo sbagliato e
+							compiere il bene
+						</li>
+					</ul>
+				</div>
+			</div>
 
-        @media (max-width: 768px) {
-            #themeToggle {
-                left: 10px;
-            }
-            #closeAllButton {
-                right: 10px;
-            }
-        }
-    </style>
-</head>
-<body class="">
+			<div class="category" data-category-name="Salute">
+				<h2 onclick="toggleSubcategory('salute', this)">
+					<span><i class="fas fa-heart"></i> Salute</span>
+					<i class="fas fa-chevron-down toggle-icon"></i>
+				</h2>
+				<div id="salute" class="subcategory">
+					<h3>Alimentazione</h3>
+					<ul>
+						<li>Segui la dieta.</li>
+						<li>Bevi almeno 2 litri di acqua al giorno.</li>
+						<li>
+							Permettiti un pasto a piacere a settimana, che non
+							sia troppo abbondante (es. piadina)
+						</li>
+						<li>
+							NIENTE bevande gassate a meno che non sia
+							un'occasione particolare
+						</li>
+						<li>
+							NIENTE cibo spazzatura a meno che non sia
+							un'occasione particolare
+						</li>
+						<li>NIENTE alcol, fumo e droghe</li>
+					</ul>
+					<h3>Esercizio Fisico e Benessere mentale</h3>
+					<ul>
+						<li>Allenati dalle 3 alle 6 volte a settimana</li>
+						<li>
+							Muoviti almeno un po' nei giorni in cui non ti
+							alleni
+						</li>
+						<li>Fai doccia fredda almeno 6 volte a settimana</li>
+						<li>
+							Fai 4 round della tecnica di respirazione WHM (Prima
+							di colazione) almeno 6 volte a settimana
+						</li>
+						<li>Medita almeno 5 minuti al giorno</li>
+					</ul>
+				</div>
+			</div>
 
-    <h1>Le Mie Regole di Vita</h1>
+			<div class="category" data-category-name="Scuola">
+				<h2 onclick="toggleSubcategory('scuola', this)">
+					<span><i class="fas fa-graduation-cap"></i> Scuola</span>
+					<i class="fas fa-chevron-down toggle-icon"></i>
+				</h2>
+				<div id="scuola" class="subcategory">
+					<h3>Produttività</h3>
+					<ul>
+						<li>
+							Usa la tecnica del Pomodoro per gestire il tempo.
+						</li>
+						<li>Pianifica la domenica la settimana successiva</li>
+						<li>
+							Controlla ogni sera il piano e vedi se ci sono
+							modifiche da apportare per i giorni seguenti
+						</li>
+					</ul>
+					<h3>Relazioni</h3>
+					<ul>
+						<li>
+							Sii sempre rispettoso con i compagni. (evitando
+							anche insulti e offese)
+						</li>
+						<li>
+							Comunica in modo chiaro e diretto, senza parlare
+							troppo veloce e scandendo bene le parole
+						</li>
+					</ul>
+				</div>
+			</div>
 
-    <button id="themeToggle" onclick="toggleTheme()">
-        <i class="fas fa-moon"></i> Tema Scuro
-    </button>
-    <button id="closeAllButton" onclick="closeAllSubcategories()"><i class="fas fa-times"></i> Chiudi tutto</button>
+			<div class="category" data-category-name="Lavoro">
+				<h2 onclick="toggleSubcategory('lavoro', this)">
+					<span><i class="fas fa-briefcase"></i> Lavoro</span>
+					<i class="fas fa-chevron-down toggle-icon"></i>
+				</h2>
+				<div id="lavoro" class="subcategory">
+					<h3>Produttività</h3>
+					<ul>
+						<li>
+							Usa la tecnica del Pomodoro per gestire il tempo.
+						</li>
+						<li>Fai una lista delle priorità ogni mattina.</li>
+					</ul>
+					<h3>Relazioni</h3>
+					<ul>
+						<li>Sii sempre rispettoso con i colleghi.</li>
+						<li>Comunica in modo chiaro e diretto.</li>
+					</ul>
+				</div>
+			</div>
 
-    <div class="search-container">
-        <i class="fas fa-search"></i>
-        <input type="text" id="searchInput" onkeyup="searchRules()" placeholder="Cerca una regola...">
-        <i class="fas fa-times clear-icon" onclick="clearSearch()"></i>
-    </div>
+			<div class="category" data-category-name="Relazioni">
+				<h2 onclick="toggleSubcategory('relazioni', this)">
+					<span><i class="fas fa-users"></i> Relazioni</span>
+					<i class="fas fa-chevron-down toggle-icon"></i>
+				</h2>
+				<div id="relazioni" class="subcategory">
+					<h3>Amicizie</h3>
+					<ul>
+						<li>Sii sempre sincero con gli amici.</li>
+						<li>Passa del tempo di qualità con loro.</li>
+						<li>Aiutali se hanno bisogno</li>
+						<li>
+							Rispetta anche chi ti ha mancato di rispetto e chi
+							ti ha tradito, se ha bisogno di aiuto aiutalo
+							mantenendo le distanze e chiarendo il perchè lo fai
+						</li>
+					</ul>
+				</div>
+			</div>
 
+			<div class="category" data-category-name="Mindset">
+				<h2 onclick="toggleSubcategory('mindset', this)">
+					<span><i class="fas fa-brain"></i> Mindset</span>
+					<i class="fas fa-chevron-down toggle-icon"></i>
+				</h2>
+				<div id="mindset" class="subcategory">
+					<h3>Crescita Personale</h3>
+					<ul>
+						<li>Sii sempre aperto all'apprendimento.</li>
+						<li>Affronta le sfide con positività.</li>
+					</ul>
+				</div>
+			</div>
 
-    <div id="categoriesContainer">
-        <div class="category" data-category-name="Obiettivi">
-            <h2 onclick="toggleSubcategory('obiettivi', this)">
-                <span><i class="fas fa-bullseye"></i> Obiettivi</span>
-                <i class="fas fa-chevron-down toggle-icon"></i>
-            </h2>
-            <div id="obiettivi" class="subcategory">
-                <h3>A Breve Termine</h3>
-                <ul>
-                    <li>Obiettivo a breve termine 1.</li>
-                    <li>Obiettivo a breve termine 2.</li>
-                </ul>
-                <h3>A Lungo Termine</h3>
-                <ul>
-                    <li>Obiettivo a lungo termine 1.</li>
-                    <li>Obiettivo a lungo termine 2.</li>
-                </ul>
-            </div>
-        </div>
+			<div class="category" data-category-name="Passioni">
+				<h2 onclick="toggleSubcategory('passioni', this)">
+					<span><i class="fas fa-star"></i> Passioni</span>
+					<i class="fas fa-chevron-down toggle-icon"></i>
+				</h2>
+				<div id="passioni" class="subcategory">
+					<h3>Hobby e Interessi</h3>
+					<ul>
+						<li>Dedica tempo alle tue passioni regolarmente.</li>
+						<li>Esplora nuovi hobby.</li>
+					</ul>
+				</div>
+			</div>
+		</div>
 
-        <div class="category" data-category-name="Salute">
-            <h2 onclick="toggleSubcategory('salute', this)">
-                <span><i class="fas fa-heart"></i> Salute</span>
-                <i class="fas fa-chevron-down toggle-icon"></i>
-            </h2>
-            <div id="salute" class="subcategory">
-                <h3>Alimentazione</h3>
-                <ul>
-                    <li>Segui la dieta.</li>
-                    <li>Bevi almeno 2 litri di acqua al giorno.</li>
-                    <li>Permettiti un pasto a piacere a settimana, che non sia troppo abbondante (es. piadina)</li>
-                    <li>NIENTE bevande gassate a meno che non sia un'occasione particolare</li>
-                    <li>NIENTE cibo spazzatura a meno che non sia un'occasione particolare</li>
-                    <li>NIENTE alcol, fumo e droghe</li>
-                </ul>
-                <h3>Esercizio Fisico e Benessere mentale</h3>
-                <ul>
-                    <li>Allenati dalle 3 alle 6 volte a settimana</li>
-                    <li>Muoviti almeno un po' nei giorni in cui non ti alleni</li>
-                    <li>Fai doccia fredda almeno 6 volte a settimana</li>
-                    <li>Fai 4 round della tecnica di respirazione WHM (Prima di colazione) almeno 6 volte a settimana</li>
-                    <li>Medita almeno 5 minuti al giorno</li>
-                </ul>
-            </div>
-        </div>
+		<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+		<script>
+			function toggleSubcategory(id, header) {
+				var subcategory = document.getElementById(id);
+				var isActive = subcategory.classList.contains("active");
+				var toggleIcon = header.querySelector(".toggle-icon");
 
-        <div class="category" data-category-name="Scuola">
-            <h2 onclick="toggleSubcategory('scuola', this)">
-                <span><i class="fas fa-graduation-cap"></i> Scuola</span>
-                <i class="fas fa-chevron-down toggle-icon"></i>
-            </h2>
-            <div id="scuola" class="subcategory">
-                <h3>Produttività</h3>
-                <ul>
-                    <li>Usa la tecnica del Pomodoro per gestire il tempo.</li>
-                    <li>Pianifica la domenica la settimana successiva</li>
-                    <li>Controlla ogni sera il piano e vedi se ci sono modifiche da apportare per i giorni seguenti</li>
-                </ul>
-                <h3>Relazioni</h3>
-                <ul>
-                    <li>Sii sempre rispettoso con i compagni. (evitando anche insulti e offese)</li>
-                    <li>Comunica in modo chiaro e diretto, senza parlare troppo veloce e scandendo bene le parole</li>
-                </ul>
-            </div>
-        </div>
+				if (!isActive) {
+					subcategory.classList.add("active");
+					toggleIcon.classList.remove("fa-chevron-down");
+					toggleIcon.classList.add("fa-chevron-up");
+					header
+						.closest(".category")
+						.scrollIntoView({ behavior: "smooth", block: "start" });
+				} else {
+					subcategory.classList.remove("active");
+					toggleIcon.classList.remove("fa-chevron-up");
+					toggleIcon.classList.add("fa-chevron-down");
+				}
+			}
 
-        <div class="category" data-category-name="Lavoro">
-            <h2 onclick="toggleSubcategory('lavoro', this)">
-                <span><i class="fas fa-briefcase"></i> Lavoro</span>
-                <i class="fas fa-chevron-down toggle-icon"></i>
-            </h2>
-            <div id="lavoro" class="subcategory">
-                <h3>Produttività</h3>
-                <ul>
-                    <li>Usa la tecnica del Pomodoro per gestire il tempo.</li>
-                    <li>Fai una lista delle priorità ogni mattina.</li>
-                </ul>
-                <h3>Relazioni</h3>
-                <ul>
-                    <li>Sii sempre rispettoso con i colleghi.</li>
-                    <li>Comunica in modo chiaro e diretto.</li>
-                </ul>
-            </div>
-        </div>
+			function closeAllSubcategories() {
+				var activeSubcategories = document.querySelectorAll(
+					".subcategory.active"
+				);
+				var toggleIcons = document.querySelectorAll(".toggle-icon");
 
-        <div class="category" data-category-name="Relazioni">
-            <h2 onclick="toggleSubcategory('relazioni', this)">
-                <span><i class="fas fa-users"></i> Relazioni</span>
-                <i class="fas fa-chevron-down toggle-icon"></i>
-            </h2>
-            <div id="relazioni" class="subcategory">
-                <h3>Amicizie</h3>
-                <ul>
-                    <li>Sii sempre sincero con gli amici.</li>
-                    <li>Passa del tempo di qualità con loro.</li>
-                    <li>Aiutali se hanno bisogno</li>
-                    <li>Rispetta anche chi ti ha mancato di rispetto e chi ti ha tradito, se ha bisogno di aiuto aiutalo mantenendo le distanze e chiarendo il perchè lo fai</li>
-                </ul>
-            </div>
-        </div>
+				activeSubcategories.forEach(function (sub) {
+					sub.classList.remove("active");
+				});
+				toggleIcons.forEach(function (icon) {
+					icon.classList.remove("fa-chevron-up");
+					icon.classList.add("fa-chevron-down");
+				});
+			}
 
-        <div class="category" data-category-name="Mindset">
-            <h2 onclick="toggleSubcategory('mindset', this)">
-                <span><i class="fas fa-brain"></i> Mindset</span>
-                <i class="fas fa-chevron-down toggle-icon"></i>
-            </h2>
-            <div id="mindset" class="subcategory">
-                <h3>Crescita Personale</h3>
-                <ul>
-                    <li>Sii sempre aperto all'apprendimento.</li>
-                    <li>Affronta le sfide con positività.</li>
-                </ul>
-            </div>
-        </div>
+			function searchRules() {
+				var input,
+					filter,
+					categories,
+					subcategories,
+					ul,
+					li,
+					i,
+					j,
+					txtValue,
+					hasResults;
+				input = document.getElementById("searchInput");
+				filter = input.value.toUpperCase();
+				categories = document.querySelectorAll(".category");
 
-        <div class="category" data-category-name="Passioni">
-            <h2 onclick="toggleSubcategory('passioni', this)">
-                <span><i class="fas fa-star"></i> Passioni</span>
-                <i class="fas fa-chevron-down toggle-icon"></i>
-            </h2>
-            <div id="passioni" class="subcategory">
-                <h3>Hobby e Interessi</h3>
-                <ul>
-                    <li>Dedica tempo alle tue passioni regolarmente.</li>
-                    <li>Esplora nuovi hobby.</li>
-                </ul>
-            </div>
-        </div>
-    </div>
+				categories.forEach((category) => {
+					hasResults = false;
+					category.style.display = "none";
+					subcategories = category.querySelectorAll(".subcategory");
+					ul = category.getElementsByTagName("ul");
+					let categoryHeader = category.querySelector("h2");
 
-    <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
-    <script>
-        function toggleSubcategory(id, header) {
-            var subcategory = document.getElementById(id);
-            var isActive = subcategory.classList.contains('active');
-            var toggleIcon = header.querySelector('.toggle-icon');
+					for (i = 0; i < ul.length; i++) {
+						li = ul[i].getElementsByTagName("li");
+						for (j = 0; j < li.length; j++) {
+							txtValue = li[j].textContent || li[j].innerText;
+							if (txtValue.toUpperCase().indexOf(filter) > -1) {
+								li[j].style.display = "";
+								hasResults = true;
+							} else {
+								li[j].style.display = "none";
+							}
+						}
+					}
 
-            if (!isActive) {
-                subcategory.classList.add('active');
-                toggleIcon.classList.remove('fa-chevron-down');
-                toggleIcon.classList.add('fa-chevron-up');
-                header.closest('.category').scrollIntoView({ behavior: 'smooth', block: 'start' });
-            } else {
-                subcategory.classList.remove('active');
-                toggleIcon.classList.remove('fa-chevron-up');
-                toggleIcon.classList.add('fa-chevron-down');
-            }
-        }
+					if (hasResults) {
+						category.style.display = "";
+						let subcategoryId = subcategories[0].id;
+						if (subcategoryId) {
+							let subcategoryElement =
+								document.getElementById(subcategoryId);
+							if (
+								!subcategoryElement.classList.contains("active")
+							) {
+								toggleSubcategory(
+									subcategoryId,
+									categoryHeader
+								);
+							}
+						}
+					} else {
+						let subcategoryId = subcategories[0].id;
+						if (subcategoryId) {
+							let subcategoryElement =
+								document.getElementById(subcategoryId);
+							if (
+								subcategoryElement.classList.contains("active")
+							) {
+								toggleSubcategory(
+									subcategoryId,
+									categoryHeader
+								);
+							}
+						}
+					}
+				});
 
-        function closeAllSubcategories() {
-            var activeSubcategories = document.querySelectorAll('.subcategory.active');
-            var toggleIcons = document.querySelectorAll('.toggle-icon');
+				if (!filter) {
+					categories.forEach((category) => {
+						category.style.display = "";
+						let subcategoryElement =
+							category.querySelector(".subcategory");
+						if (
+							subcategoryElement &&
+							subcategoryElement.classList.contains("active")
+						) {
+							let categoryHeader = category.querySelector("h2");
+							toggleSubcategory(
+								subcategoryElement.id,
+								categoryHeader
+							);
+						}
+					});
+				}
+			}
 
-            activeSubcategories.forEach(function(sub) {
-                sub.classList.remove('active');
-            });
-            toggleIcons.forEach(function(icon) {
-                icon.classList.remove('fa-chevron-up');
-                icon.classList.add('fa-chevron-down');
-            });
-        }
+			function clearSearch() {
+				document.getElementById("searchInput").value = "";
+				searchRules();
+			}
 
-        function searchRules() {
-            var input, filter, categories, subcategories, ul, li, i, j, txtValue, hasResults;
-            input = document.getElementById("searchInput");
-            filter = input.value.toUpperCase();
-            categories = document.querySelectorAll(".category");
+			function toggleTheme() {
+				const body = document.body;
+				const themeToggle = document.getElementById("themeToggle");
 
-            categories.forEach(category => {
-                hasResults = false;
-                category.style.display = "none";
-                subcategories = category.querySelectorAll(".subcategory");
-                ul = category.getElementsByTagName("ul");
-                let categoryHeader = category.querySelector('h2');
+				body.classList.toggle("dark-theme");
 
-                for (i = 0; i < ul.length; i++) {
-                    li = ul[i].getElementsByTagName("li");
-                    for (j = 0; j < li.length; j++) {
-                        txtValue = li[j].textContent || li[j].innerText;
-                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                            li[j].style.display = "";
-                            hasResults = true;
-                        } else {
-                            li[j].style.display = "none";
-                        }
-                    }
-                }
+				if (body.classList.contains("dark-theme")) {
+					themeToggle.innerHTML =
+						'<i class="fas fa-sun"></i> Tema Chiaro';
+				} else {
+					themeToggle.innerHTML =
+						'<i class="fas fa-moon"></i> Tema Scuro';
+				}
 
-                if (hasResults) {
-                    category.style.display = "";
-                    let subcategoryId = subcategories[0].id;
-                    if (subcategoryId) {
-                        let subcategoryElement = document.getElementById(subcategoryId);
-                        if (!subcategoryElement.classList.contains('active')) {
-                            toggleSubcategory(subcategoryId, categoryHeader);
-                        }
-                    }
-                } else {
-                    let subcategoryId = subcategories[0].id;
-                    if (subcategoryId) {
-                        let subcategoryElement = document.getElementById(subcategoryId);
-                        if (subcategoryElement.classList.contains('active')) {
-                            toggleSubcategory(subcategoryId, categoryHeader);
-                        }
-                    }
-                }
-            });
+				localStorage.setItem(
+					"theme",
+					body.classList.contains("dark-theme") ? "dark" : "light"
+				);
+			}
 
-            if (!filter) {
-                categories.forEach(category => {
-                    category.style.display = "";
-                    let subcategoryElement = category.querySelector('.subcategory');
-                    if (subcategoryElement && subcategoryElement.classList.contains('active')) {
-                        let categoryHeader = category.querySelector('h2');
-                        toggleSubcategory(subcategoryElement.id, categoryHeader);
-                    }
-                });
-            }
-        }
+			function isMobileDevice() {
+				return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+					navigator.userAgent
+				);
+			}
 
-        function clearSearch() {
-            document.getElementById('searchInput').value = '';
-            searchRules();
-        }
+			document.addEventListener("DOMContentLoaded", function () {
+				var categoriesContainer = document.getElementById(
+					"categoriesContainer"
+				);
+				if (!isMobileDevice()) {
+					// Condizione per non inizializzare su mobile
+					Sortable.create(categoriesContainer, {
+						handle: "h2",
+						animation: 150,
+						onStart: function (evt) {
+							const movedCategory = evt.item;
+							const subcategoryElement =
+								movedCategory.querySelector(".subcategory");
+							const toggleIcon =
+								movedCategory.querySelector(".toggle-icon");
 
-        function toggleTheme() {
-            const body = document.body;
-            const themeToggle = document.getElementById('themeToggle');
+							if (
+								subcategoryElement.classList.contains("active")
+							) {
+								subcategoryElement.classList.remove("active");
+								toggleIcon.classList.remove("fa-chevron-up");
+								toggleIcon.classList.add("fa-chevron-down");
+							}
+						},
+						onEnd: function (evt) {
+							console.log(
+								"Categoria riordinata",
+								evt.oldIndex,
+								evt.newIndex
+							);
+						},
+					});
+				}
 
-            body.classList.toggle('dark-theme');
+				const savedTheme = localStorage.getItem("theme");
+				const body = document.body;
+				const themeToggle = document.getElementById("themeToggle");
 
-            if (body.classList.contains('dark-theme')) {
-                themeToggle.innerHTML = '<i class="fas fa-sun"></i> Tema Chiaro';
-            } else {
-                themeToggle.innerHTML = '<i class="fas fa-moon"></i> Tema Scuro';
-            }
-
-            localStorage.setItem('theme', body.classList.contains('dark-theme') ? 'dark' : 'light');
-        }
-
-        function isMobileDevice() {
-            return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-        }
-
-
-        document.addEventListener('DOMContentLoaded', function() {
-            var categoriesContainer = document.getElementById('categoriesContainer');
-            if (!isMobileDevice()) { // Condizione per non inizializzare su mobile
-                Sortable.create(categoriesContainer, {
-                    handle: 'h2',
-                    animation: 150,
-                    onStart: function (evt) {
-                        const movedCategory = evt.item;
-                        const subcategoryElement = movedCategory.querySelector('.subcategory');
-                        const toggleIcon = movedCategory.querySelector('.toggle-icon');
-
-                        if (subcategoryElement.classList.contains('active')) {
-                            subcategoryElement.classList.remove('active');
-                            toggleIcon.classList.remove('fa-chevron-up');
-                            toggleIcon.classList.add('fa-chevron-down');
-                        }
-                    },
-                    onEnd: function (evt) {
-                        console.log('Categoria riordinata', evt.oldIndex, evt.newIndex);
-                    },
-                });
-            }
-
-            const savedTheme = localStorage.getItem('theme');
-            const body = document.body;
-            const themeToggle = document.getElementById('themeToggle');
-
-            if (savedTheme === 'dark') {
-                body.classList.add('dark-theme');
-                themeToggle.innerHTML = '<i class="fas fa-sun"></i> Tema Chiaro';
-            } else {
-                body.classList.remove('dark-theme');
-                themeToggle.innerHTML = '<i class="fas fa-moon"></i> Tema Scuro';
-            }
-        });
-    </script>
-
-</body>
+				if (savedTheme === "dark") {
+					body.classList.add("dark-theme");
+					themeToggle.innerHTML =
+						'<i class="fas fa-sun"></i> Tema Chiaro';
+				} else {
+					body.classList.remove("dark-theme");
+					themeToggle.innerHTML =
+						'<i class="fas fa-moon"></i> Tema Scuro';
+				}
+			});
+		</script>
+	</body>
 </html>
